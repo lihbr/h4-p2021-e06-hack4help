@@ -83,7 +83,7 @@ module.exports = async () => {
     /*
      ** Plugins to load before mounting the App
      */
-    plugins: [{ src: "~/plugins/welcome", mode: "client" }],
+    //plugins: [{ src: "~/plugins/welcome", mode: "client" }],
 
     /*
      ** Nuxt.js modules
