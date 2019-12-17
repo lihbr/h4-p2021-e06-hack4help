@@ -10,9 +10,9 @@ const colors = {
   black: "#222222",
   white: "#fefefe",
 
-  red: "ff3b30",
-  green: "34c759",
-  orange: "ff9500",
+  red: "#ff3b30",
+  green: "#34c759",
+  orange: "#ff9500",
 
   cyan: "#06b2ba",
   "cyan-800": "#03888e",
