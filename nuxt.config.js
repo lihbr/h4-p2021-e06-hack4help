@@ -158,6 +158,13 @@ module.exports = async () => {
     env,
 
     /*
+     ** Generate
+     */
+    generate: {
+      fallback: true
+    },
+
+    /*
      ** Server configuration
      */
     server: {
