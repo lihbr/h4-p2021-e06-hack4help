@@ -110,6 +110,7 @@ module.exports = async () => {
           dev: env.GTM_DEV
         }
       ],
+      "@nuxtjs/apollo",
       "nuxt-svg-loader"
     ],
 
@@ -127,6 +128,28 @@ module.exports = async () => {
       hostname: env.APP_URL,
       gzip: true,
       exclude: []
+    },
+
+    /*
+     ** Apollo
+     */
+    apollo: {
+      tokenName: env.GQL_TOKEN_NAME,
+      cookieAttributes: {
+        expires: 7,
+        path: "/",
+        // domain: "example.com",
+        secure: !env.DEV
+      },
+      watchLoading: "~/plugins/apollo-watch-loading-handler.js",
+      errorHandler: "~/plugins/apollo-error-handler.js",
+      clientConfigs: {
+        default: {
+          httpEndpoint: env.GQL_HTTP_URL,
+          wsEndpoint: env.GQL_WS_URL,
+          tokenName: env.GQL_TOKEN_NAME
+        }
+      }
     },
 
     /*

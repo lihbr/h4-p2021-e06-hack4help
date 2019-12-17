@@ -22,6 +22,10 @@ const config = async () => {
   const GTM_FRIENDLY = process.env.GTM_FRIENDLY || false;
   const GTM_DEV = process.env.GTM_DEV || false;
 
+  const GQL_HTTP_URL = process.env.GQL_HTTP_URL || "";
+  const GQL_WS_URL = process.env.GQL_WS_URL || "";
+  const GQL_TOKEN_NAME = process.env.GQL_TOKEN_NAME || "apollo-token";
+
   return {
     DEV,
     COMMIT_REF,
@@ -36,6 +40,10 @@ const config = async () => {
     GTM_ID,
     GTM_FRIENDLY,
     GTM_DEV,
+
+    GQL_HTTP_URL,
+    GQL_WS_URL,
+    GQL_TOKEN_NAME,
 
     CMS_CONTENT
   };
