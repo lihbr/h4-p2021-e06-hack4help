@@ -7,7 +7,7 @@ module.exports = async () => {
     /*
      ** Application mode
      */
-    mode: "universal",
+    mode: "spa",
 
     /*
      ** Application directory
@@ -83,7 +83,7 @@ module.exports = async () => {
     /*
      ** Plugins to load before mounting the App
      */
-    //plugins: [{ src: "~/plugins/welcome", mode: "client" }],
+    plugins: [],
 
     /*
      ** Nuxt.js modules
@@ -96,7 +96,6 @@ module.exports = async () => {
     buildModules: [
       "@nuxtjs/eslint-module",
       "~/modules/build",
-      "~/modules/generate",
       "~/modules/components",
       "~/modules/tailwindcss",
       "@nuxtjs/style-resources",
