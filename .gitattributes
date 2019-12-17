@@ -1,4 +1,8 @@
 * text eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
 
 package-lock.json -diff
 yarn.lock -diff
