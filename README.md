@@ -1,6 +1,6 @@
-# template-vue-nuxt
+# h4-p2021-e06-hack4help
 
-A Nuxt.js starter pack to build app with Vue.js
+An application to help homeless get a mailbox.
 
 ## Build Setup
 

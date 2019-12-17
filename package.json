@@ -1,8 +1,8 @@
 {
-  "name": "template-vue-nuxt",
-  "version": "2.4.0",
-  "description": "A Nuxt.js starter pack to build app with Vue.js",
-  "author": "lihbr",
+  "name": "h4-p2021-e06-hack4help",
+  "version": "1.0.0",
+  "description": "An application to help homeless get a mailbox",
+  "author": "lihbr, ameliegj & JulesGuesnon",
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "dev": "nuxt",
