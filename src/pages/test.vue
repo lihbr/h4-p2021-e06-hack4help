@@ -18,8 +18,6 @@ export default {
   async asyncData({ app }) {
     const client = app.apolloProvider.clients.spacex;
 
-    console.log(app.apolloProvider);
-
     const { data } = await client.query({
       query: gql`
         {
