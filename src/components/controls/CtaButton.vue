@@ -1,6 +1,6 @@
 <template>
   <div class="button">
-    <button class="bg-primary hover:bg-primaryDarken w-64 h-12">
+    <button class="bg-primary hover:bg-primaryActive w-64 h-12">
       <p class="text-white">
         {{ this.text }}
       </p>
@@ -12,10 +12,10 @@
 // import Component from "~/components/Component.vue"
 
 export default {
-  props: ["text"],
   components: {
     // Component
-  }
+  },
+  props: ["text"]
 };
 </script>
 

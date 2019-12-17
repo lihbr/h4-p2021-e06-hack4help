@@ -7,12 +7,21 @@ const col = 120;
 const baseDuration = 1500;
 
 const colors = {
-  black: "#111111",
+  black: "#222222",
   white: "#fefefe",
-  grey: "#F5F6F8",
-  primary: "#06B2BA",
-  primaryDarken: "#03888E"
+
+  red: "ff3b30",
+  green: "34c759",
+  orange: "ff9500",
+
+  cyan: "#06b2ba",
+  "cyan-800": "#03888e",
+
+  grey: "#f5f6f8",
+  "grey-600": "#e6e6e6",
+  "grey-800": "#757575"
 };
+
 const colorOpacityVariants = [20];
 /**
  * End generic project config
@@ -32,6 +41,19 @@ module.exports = {
     },
     fontFamily: {
       main: [
+        "Inter",
+        "-apple-system",
+        "BlinkMacSystemFont",
+        "Segoe UI",
+        "Helvetica",
+        "Arial",
+        "sans-serif",
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol"
+      ],
+      sub: [
+        "Fabriga",
         "-apple-system",
         "BlinkMacSystemFont",
         "Segoe UI",
