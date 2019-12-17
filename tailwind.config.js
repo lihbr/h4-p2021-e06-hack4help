@@ -8,7 +8,10 @@ const baseDuration = 1500;
 
 const colors = {
   black: "#111111",
-  white: "#fefefe"
+  white: "#fefefe",
+  grey: "#F5F6F8",
+  primary: "#06B2BA",
+  primaryDarken: "#03888E"
 };
 const colorOpacityVariants = [20];
 /**
