@@ -148,6 +148,9 @@ module.exports = async () => {
           httpEndpoint: env.GQL_HTTP_URL,
           wsEndpoint: env.GQL_WS_URL,
           tokenName: env.GQL_TOKEN_NAME
+        },
+        spacex: {
+          httpEndpoint: "https://api.spacex.land/graphql/"
         }
       }
     },
