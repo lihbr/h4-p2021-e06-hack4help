@@ -1,7 +1,13 @@
 <template>
   <smart-link
     class="ctaButton block bg-cyan hover:bg-cyan-800 transition-bg-opacity transition-half rounded text-center select-none"
-    :class="[{ disabled, outline }, outline ? `outline--${outline}` : '']"
+    :class="{
+      disabled,
+      outline,
+      'outline--cyan': outline === 'cyan',
+      'outline--red': outline === 'red',
+      'outline--grey': outline === 'grey'
+    }"
     :href="href"
     :title="title"
     :blank="blank"
