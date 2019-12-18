@@ -1,8 +1,5 @@
 <template>
-  <div class="__layout__default">
-    <app-header>
-      TODO: Add CTAs (./layouts/default.vue)
-    </app-header>
+  <div class="__layout__blank">
     <main class="main">
       <nuxt />
     </main>
@@ -12,12 +9,7 @@
 <script>
 import objectFitImages from "object-fit-images";
 
-import AppHeader from "~/components/partials/header/AppHeader.vue";
-
 export default {
-  components: {
-    AppHeader
-  },
   head() {
     return {
       htmlAttrs: {

@@ -1,7 +1,10 @@
 <template>
-  <div class="__layout__default">
+  <div class="__layout__app">
     <app-header>
-      TODO: Add CTAs (./layouts/default.vue)
+      <div class="flex">
+        <user-profile />
+        <logout class="ml-3" />
+      </div>
     </app-header>
     <main class="main">
       <nuxt />
@@ -13,10 +16,14 @@
 import objectFitImages from "object-fit-images";
 
 import AppHeader from "~/components/partials/header/AppHeader.vue";
+import UserProfile from "~/components/partials/header/actions/UserProfile.vue";
+import Logout from "~/components/partials/header/actions/Logout.vue";
 
 export default {
   components: {
-    AppHeader
+    AppHeader,
+    UserProfile,
+    Logout
   },
   head() {
     return {

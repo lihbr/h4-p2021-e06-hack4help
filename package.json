@@ -23,6 +23,7 @@
     "graphql-tag": "2.10.1",
     "is-mobile": "2.1.0",
     "marked": "0.7.0",
+    "md5": "2.2.1",
     "mouse-wheel": "1.2.0",
     "netlify-cms": "2.9.7",
     "nuxt": "2.10.1",
