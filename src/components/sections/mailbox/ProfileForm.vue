@@ -100,7 +100,7 @@
         v-if="!creating"
         :disabled="editing && !canSubmit"
         class="w-full mx-semibase"
-        danger
+        outline="red"
         @click.native="deleting = true"
       >
         Supprimer
@@ -121,50 +121,41 @@
         </template>
       </cta-button>
     </div>
-    <transition name="fade">
-      <div
-        v-if="deleting"
-        class="modal fixed w-full h-screen top-0 left-0 bg-black-o-20 z-10"
-        @click.self="deleting = false"
-      >
-        <div
-          class="modal__inner absolute top-50p left-50p transform-center max-w-col-4 bg-white rounded text-center"
-        >
-          <div class="text-h2 mb-base">
-            Suppression d'une boîte
-          </div>
-          <div class="text-p text-grey-800">
-            Êtes-vous sûr de bien vouloir supprimer la boîte de
-            <strong>{{ recipient | fullName }}</strong>
-            , cette action est définitive.
-          </div>
-          <div v-if="!isRecipient" class="flex -mx-semibase mt-base">
-            <cta-button
-              :disabled="editing && !canSubmit"
-              class="w-full mx-semibase"
-              outline
-              @click.native="deleting = false"
-            >
-              Annuler
-            </cta-button>
-            <cta-button
-              :disabled="editing && !canSubmit"
-              class="w-full mx-semibase"
-              danger
-              @click.native="deleteMailbox"
-            >
-              Confirmer
-            </cta-button>
-          </div>
-        </div>
+    <modal :active="deleting" @close="deleting = false">
+      <div class="text-h2 mb-base">
+        Suppression d'une boîte
       </div>
-    </transition>
+      <div class="text-p text-grey-800">
+        Êtes-vous sûr de bien vouloir supprimer la boîte de
+        <strong>{{ recipient | fullName }}</strong>
+        , cette action est définitive.
+      </div>
+      <div v-if="!isRecipient" class="flex -mx-semibase mt-base">
+        <cta-button
+          :disabled="editing && !canSubmit"
+          class="w-full mx-semibase"
+          outline="grey-800"
+          @click.native="deleting = false"
+        >
+          Annuler
+        </cta-button>
+        <cta-button
+          :disabled="editing && !canSubmit"
+          class="w-full mx-semibase"
+          outline="red"
+          @click.native="deleteMailbox"
+        >
+          Confirmer
+        </cta-button>
+      </div>
+    </modal>
   </div>
 </template>
 
 <script>
 import InputString from "~/components/controls/InputString.vue";
 import CtaButton from "~/components/controls/CtaButton.vue";
+import Modal from "~/components/controls/Modal.vue";
 
 import IconDownload from "~/assets/icons/download.svg";
 import IconCrossSilhouette from "~/assets/icons/cross--silhouette.svg";
@@ -173,6 +164,8 @@ export default {
   components: {
     InputString,
     CtaButton,
+    Modal,
+
     IconDownload,
     IconCrossSilhouette
   },
@@ -299,14 +292,4 @@ export default {
 
       .icon
         @apply absolute transform-center top-50p left-50p
-
-  .modal
-    &__inner
-      padding: 50px 60px
-
-  .fade-enter-active, .fade-leave-active
-    @apply transition-opacity will-change-opacity transition-quarter
-
-  .fade-enter, .fade-leave-to
-    @apply opacity-0
 </style>

@@ -1,7 +1,7 @@
 <template>
   <smart-link
     class="ctaButton block bg-cyan hover:bg-cyan-800 transition-bg-opacity transition-half rounded text-center select-none"
-    :class="{ disabled, danger, outline }"
+    :class="[{ disabled, outline }, outline ? `outline--${outline}` : '']"
     :href="href"
     :title="title"
     :blank="blank"
@@ -38,13 +38,9 @@ export default {
       type: Boolean,
       default: false
     },
-    danger: {
-      type: Boolean,
-      default: false
-    },
     outline: {
-      type: Boolean,
-      default: false
+      type: String,
+      default: ""
     }
   }
 };
@@ -55,20 +51,32 @@ export default {
   &.disabled
     @apply cursor-default pointer-events-none opacity-80
 
-  &:not(.danger):not(.outline)
+  &:not(.outline)
     @apply text-white
 
-  &.danger
-    @apply bg-none text-red border border-red
-
-    &:hover
-      @apply bg-red text-white
-
   &.outline
-    @apply bg-none text-grey-800 border border-grey-800
+    @apply bg-none border
 
     &:hover
-      @apply bg-grey-800 text-white
+      @apply text-white
+
+    &--grey-800
+      @apply text-grey-800 border-grey-800
+
+      &:hover
+        @apply bg-grey-800
+
+    &--red
+      @apply text-red border-red
+
+      &:hover
+        @apply bg-red
+
+    &--cyan
+      @apply text-cyan border-cyan
+
+      &:hover
+        @apply bg-cyan
 
   button
     height: 50px
