@@ -90,7 +90,8 @@ module.exports = {
         for (const opacity of colorOpacityVariants) {
           colorObject[`o-${opacity}`] = Color(value)
             .alpha(opacity / 100)
-            .rgb();
+            .rgb()
+            .toString();
         }
 
         finalColors[color] = colorObject;
@@ -99,28 +100,30 @@ module.exports = {
       return finalColors;
     },
     fontSize: {
-      "3xs": "0.5rem", //   8px
-      "2xs": "0.625rem", // 10px
-      xs: "0.75rem", //     12px
-      s: "0.875rem", //     14px
-      sAlt: "0.9375rem", // 15px
-      m: "1rem", //         16px
-      l: "1.125rem", //     18px
-      xl: "1.25rem", //     20px
-      "2xl": "1.375rem", // 22px
-      "3xl": "1.75rem", //  28px
-      "4xl": "2rem", //     32px
-      "5xl": "2.25rem", //  36px
-      "6xl": "2.75rem", //  44px
-      "7xl": "3.25rem", //  52px
-      "8xl": "4rem", //     64px
-      "9xl": "4.5rem", //   72px
-      "10xl": "5rem" //     80px
+      "3xs": "0.5rem", //    8px
+      "2xs": "0.625rem", //  10px
+      xs: "0.75rem", //      12px
+      xsAlt: "0.8125rem", // 13px
+      s: "0.875rem", //      14px
+      sAlt: "0.9375rem", //  15px
+      m: "1rem", //          16px
+      l: "1.125rem", //      18px
+      xl: "1.25rem", //      20px
+      "2xl": "1.375rem", //  22px
+      "3xl": "1.75rem", //   28px
+      "4xl": "2rem", //      32px
+      "5xl": "2.25rem", //   36px
+      "6xl": "2.5rem", //   40px
+      "7xl": "3.125rem", //  50px
+      "8xl": "4rem", //      64px
+      "9xl": "4.5rem", //    72px
+      "10xl": "5rem" //      80px
     },
     opacity: {
       inherit: "inherit",
       "0": "0",
       "10": "0.1",
+      "15": "0.15",
       "20": "0.2",
       "30": "0.3",
       "40": "0.4",
@@ -152,6 +155,7 @@ module.exports = {
       bg: "background",
       "width-height": ["width", "height"],
       opacity: "opacity",
+      "bg-opacity": ["background", "opacity"],
       transform: "transform",
       "opacity-transform": ["opacity", "transform"]
     },

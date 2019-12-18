@@ -114,6 +114,9 @@ import CtaButton from "../../components/controls/CtaButton.vue";
 
 export default {
   layout: "blank",
+  head: {
+    title: "Connexion"
+  },
   components: {
     // Component
     CtaButton

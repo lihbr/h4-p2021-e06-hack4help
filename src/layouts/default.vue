@@ -1,11 +1,27 @@
 <template>
   <div class="__layout__default">
     <app-header>
-      TODO: Add CTAs (./layouts/default.vue)
+      <div class="flex -mx-2 sm:-mx-semibase">
+        <cta-button href="/donate" class="hidden sm:block sm:mx-semibase" small>
+          Offrir une adresse
+        </cta-button>
+        <cta-button href="/donate" class="sm:hidden" small>
+          Don
+        </cta-button>
+        <cta-button
+          href="/app/login"
+          outline="cyan"
+          class="mx-2 sm:mx-semibase"
+          small
+        >
+          Se connecter
+        </cta-button>
+      </div>
     </app-header>
     <main class="main">
       <nuxt />
     </main>
+    <app-footer />
   </div>
 </template>
 
@@ -13,10 +29,14 @@
 import objectFitImages from "object-fit-images";
 
 import AppHeader from "~/components/partials/header/AppHeader.vue";
+import AppFooter from "~/components/partials/footer/AppFooter.vue";
+import CtaButton from "~/components/controls/CtaButton.vue";
 
 export default {
   components: {
-    AppHeader
+    AppHeader,
+    AppFooter,
+    CtaButton
   },
   head() {
     return {
