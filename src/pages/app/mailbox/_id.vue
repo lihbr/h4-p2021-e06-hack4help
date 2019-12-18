@@ -8,7 +8,7 @@
 // import Component from "~/components/Component.vue"
 
 export default {
-  middleware: "isAuth",
+  // middleware: "isAuth",
   layout: "app",
   components: {
     // Component
