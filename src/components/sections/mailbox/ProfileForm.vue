@@ -74,9 +74,14 @@
           type="file"
           :disabled="!editing && !creating && !isRecipient"
           :dark="(editing || creating) && !isRecipient"
+          class="cursor-pointer"
         >
           <template v-slot:after>
-            <div v-if="editing && !isRecipient" class="clearButton">
+            <div
+              v-if="editing && !isRecipient && cRecipient.document.name !== ''"
+              class="clearButton"
+              @click.prevent="cRecipient.document.name = ''"
+            >
               <icon-cross-silhouette class="w-6 h-6 icon" />
             </div>
             <a
