@@ -1,9 +1,13 @@
 <template>
   <header class="appHeader bg-grey">
     <div class="flex justify-between items-center container mx-auto p-5">
-      <figure class="logo flex items-center">
-        <img src="" alt="Adresse pour tous" />
-      </figure>
+      <smart-link
+        href="/"
+        class="logo block items-center font-sub text-l font-medium"
+      >
+        <img-logo class="sm:mr-3 inline-block" />
+        <span class="hidden sm:inline">Une adresse pour tous</span>
+      </smart-link>
       <nav class="right">
         <slot />
       </nav>
@@ -12,7 +16,13 @@
 </template>
 
 <script>
-export default {};
+import ImgLogo from "~/assets/img/logo.svg";
+
+export default {
+  components: {
+    ImgLogo
+  }
+};
 </script>
 
 <style lang="sass" scoped></style>
