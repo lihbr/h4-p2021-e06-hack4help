@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard container mx-auto p-5">
+  <div class="dashboard container mx-auto px-5 pt-5 pb-semibase">
     <header class="lg:flex justify-between items-center mt-5 mb-base">
       <h2 class="text-h2 mb-semibase lg:mb-0">
         Mes boites
