@@ -9,6 +9,7 @@
 
 export default {
   middleware: "isAuth",
+  layout: "app",
   components: {
     // Component
   }

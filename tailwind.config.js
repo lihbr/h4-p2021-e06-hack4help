@@ -4,6 +4,7 @@ const Color = require("color");
  * Start generic project config
  */
 const col = 120;
+const spacingBase = 30;
 const baseDuration = 1500;
 
 const colors = {
@@ -75,7 +76,7 @@ module.exports = {
     },
     colors: () => {
       const finalColors = {
-        none: "none",
+        none: "transparent",
         inherit: "inherit"
       };
 
@@ -102,10 +103,11 @@ module.exports = {
       "2xs": "0.625rem", // 10px
       xs: "0.75rem", //     12px
       s: "0.875rem", //     14px
+      sAlt: "0.9375rem", // 15px
       m: "1rem", //         16px
       l: "1.125rem", //     18px
       xl: "1.25rem", //     20px
-      "2xl": "1.5rem", //   24px
+      "2xl": "1.375rem", // 22px
       "3xl": "1.75rem", //  28px
       "4xl": "2rem", //     32px
       "5xl": "2.25rem", //  36px
@@ -214,7 +216,14 @@ module.exports = {
           "col-9": `${col * 9}px`, // 1080px
           "col-10": `${col * 10}px`, // 1200px
           "col-11": `${col * 11}px`, // 1320px
-          "col-12": `${col * 12}px` // 1440px
+          "col-12": `${col * 12}px`, // 1440px
+
+          base: `${spacingBase}px`, // 30px
+          semibase: `${spacingBase * 0.5}px`, // 15px
+          "base-2": `${spacingBase * 2}px`, // 60px
+          "-base": `${spacingBase}px`, // 30px
+          "-semibase": `${spacingBase * -0.5}px`, // -15px
+          "-base-2": `${spacingBase * -2}px` // -60px
         };
 
         for (let i = 1; i <= 12; i++) {

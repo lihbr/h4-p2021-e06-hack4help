@@ -12,11 +12,15 @@
         <div>email</div>
         <div>mot de passe</div>
         <div>se souvenir / oublié</div>
-        <cta-button text="SE CONNECTER"></cta-button>
+        <cta-button class="w-full">
+          Se connecter
+        </cta-button>
         <div>ligne</div>
         <h2>Rejoindre l'aventure</h2>
         <p>Vous êtes une association et vous souhaitez créer un espace ?</p>
-        <cta-button text="FAIRE UNE DEMANDE"></cta-button>
+        <cta-button class="w-full">
+          Faire une demande
+        </cta-button>
       </div>
     </div>
   </div>
@@ -27,6 +31,7 @@
 import CtaButton from "../../components/controls/CtaButton.vue";
 
 export default {
+  layout: "blank",
   components: {
     // Component
     CtaButton
