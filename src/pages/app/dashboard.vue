@@ -187,6 +187,9 @@ import IconArrowRight from "~/assets/icons/arrow--right.svg";
 export default {
   // middleware: "isAuth",
   layout: "app",
+  head: {
+    title: "Dashboard"
+  },
   components: {
     CtaButton,
     InputString,

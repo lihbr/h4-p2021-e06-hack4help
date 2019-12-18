@@ -54,6 +54,9 @@ import IconCross from "~/assets/icons/cross.svg";
 export default {
   // middleware: "isAuth",
   layout: "app",
+  head: {
+    title: "Adresse"
+  },
   components: {
     RetrieveForm,
     ProfileForm,

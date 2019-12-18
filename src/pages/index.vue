@@ -38,27 +38,35 @@
       <img-about-us class="max-w-full mx-auto hidden md:block" />
       <ul class="md:hidden text-left -my-semibase">
         <li class="my-semibase">
-          <h4 class="text-h2">Les personnes sans-domicile</h4>
+          <h4 class="text-h2">
+            Les personnes sans-domicile
+          </h4>
           <p class="text-p">
             Ont besoin d’une adresse pour bénéficier de leurs droits.
           </p>
         </li>
         <li class="my-semibase">
-          <h4 class="text-h2">Les associations</h4>
+          <h4 class="text-h2">
+            Les associations
+          </h4>
           <p class="text-p">
             S’occupent des démarchent administratives, des demandes et du suivi
             de la personne.
           </p>
         </li>
         <li class="my-semibase">
-          <h4 class="text-h2">Les sociétés de domiciliation</h4>
+          <h4 class="text-h2">
+            Les sociétés de domiciliation
+          </h4>
           <p class="text-p">
             Fournissent l’adresse de domiciliation postale, reçoivent et gèrent
             le courrier.
           </p>
         </li>
         <li class="my-semibase">
-          <h4 class="text-h2">Et nous ?</h4>
+          <h4 class="text-h2">
+            Et nous ?
+          </h4>
           <p class="text-p">
             Nous faisons le lien entre ces trois acteurs !
           </p>
