@@ -8,7 +8,14 @@
         <h1>
           <icon-user-green class="icon inline-block" />
           <span v-if="isRecipient">Ma boîte postale</span>
-          <span v-else>{{ recipient | fullName }}</span>
+          <span v-else>
+            <template v-if="mailbox.status === 'new'">
+              Nouvelle adresse...
+            </template>
+            <template v-else>
+              {{ recipient | fullName }}
+            </template>
+          </span>
         </h1>
         <smart-link
           v-if="!isRecipient"
@@ -65,6 +72,26 @@ export default {
   async asyncData({ params }) {
     // TODO: Perform actual query
     console.log(params);
+
+    if (params.id === "new") {
+      const recipient = {
+        firstName: "",
+        lastName: "",
+        mail: "",
+        document: {
+          name: ""
+        }
+      };
+      const mailbox = {
+        status: "new",
+        address: {
+          street: "",
+          city: "",
+          zip: 0
+        }
+      };
+      return { recipient, mailbox };
+    }
 
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();

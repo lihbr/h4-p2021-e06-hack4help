@@ -5,8 +5,8 @@
       <input-string
         v-model="cRecipient.lastName"
         link-id="lastName"
-        :disabled="!editing"
-        :dark="editing"
+        :disabled="!editing && !creating"
+        :dark="editing || creating"
       />
     </div>
     <div class="inputWrapper mb-semibase">
@@ -14,18 +14,18 @@
       <input-string
         v-model="cRecipient.firstName"
         link-id="firstName"
-        :disabled="!editing"
-        :dark="editing"
+        :disabled="!editing && !creating"
+        :dark="editing || creating"
       />
     </div>
     <div class="inputWrapper mb-semibase">
-      <label for="mail">Prénom</label>
+      <label for="mail">Email</label>
       <input-string
         v-model="cRecipient.mail"
         link-id="mail"
         type="mail"
-        :disabled="!editing"
-        :dark="editing"
+        :disabled="!editing && !creating"
+        :dark="editing || creating"
       />
     </div>
     <cta-button
@@ -41,8 +41,8 @@
       <input-string
         v-model="cMailbox.address.street"
         link-id="street"
-        :disabled="!editing && !isRecipient"
-        :dark="editing && !isRecipient"
+        :disabled="!editing && !creating && !isRecipient"
+        :dark="(editing || creating) && !isRecipient"
       />
     </div>
     <div class="flex mb-semibase">
@@ -51,8 +51,8 @@
         <input-string
           v-model="cMailbox.address.city"
           link-id="city"
-          :disabled="!editing && !isRecipient"
-          :dark="editing && !isRecipient"
+          :disabled="!editing && !creating && !isRecipient"
+          :dark="(editing || creating) && !isRecipient"
         />
       </div>
       <div class="inputWrapper w-1/3">
@@ -60,8 +60,8 @@
         <input-string
           v-model="cMailbox.address.zip"
           link-id="zip"
-          :disabled="!editing && !isRecipient"
-          :dark="editing && !isRecipient"
+          :disabled="!editing && !creating && !isRecipient"
+          :dark="(editing || creating) && !isRecipient"
         />
       </div>
     </div>
@@ -72,8 +72,8 @@
           v-model="cRecipient.document.name"
           link-id="document"
           type="file"
-          :disabled="!editing && !isRecipient"
-          :dark="editing && !isRecipient"
+          :disabled="!editing && !creating && !isRecipient"
+          :dark="(editing || creating) && !isRecipient"
         >
           <template v-slot:after>
             <div v-if="editing && !isRecipient" class="clearButton">
@@ -92,6 +92,7 @@
     </div>
     <div v-if="!isRecipient" class="flex -mx-semibase mt-base">
       <cta-button
+        v-if="!creating"
         :disabled="editing && !canSubmit"
         class="w-full mx-semibase"
         danger
@@ -100,11 +101,19 @@
         Supprimer
       </cta-button>
       <cta-button
-        :disabled="editing && !canSubmit"
+        :disabled="(editing || creating) && !canSubmit"
         class="w-full mx-semibase"
-        @click.native="editing ? submit() : (editing = true)"
+        @click.native="editing || creating ? submit() : (editing = true)"
       >
-        {{ editing ? "Sauvegarder" : "Éditer" }}
+        <template v-if="editing">
+          Sauvegarder
+        </template>
+        <template v-else-if="creating">
+          Créer
+        </template>
+        <template v-else>
+          Éditer
+        </template>
       </cta-button>
     </div>
     <transition name="fade">
@@ -185,7 +194,6 @@ export default {
         lastName: "",
         mail: "",
         document: {
-          file: "",
           name: ""
         }
       },
@@ -209,13 +217,15 @@ export default {
       if (new String(this.cMailbox.address.zip).trim() === "") return false;
 
       if (this.cRecipient.document) {
-        if (this.cRecipient.document.file.trim() === "") return false;
         if (this.cRecipient.document.name.trim() === "") return false;
       } else {
         return false;
       }
 
       return true;
+    },
+    creating() {
+      return this.mailbox.status === "new";
     }
   },
   watch: {
@@ -241,8 +251,19 @@ export default {
       // TODO: Handle submit
       window.alert("TODO: Handle submit");
 
-      this.editing = false;
-      this.$emit("updated");
+      console.log(this.creating);
+
+      if (this.creating) {
+        // creating
+        console.log("oui");
+
+        const { id } = { id: "636cb36d-ddc5-4bd8-860f-4d2f769a057e" }; // await...
+        this.$router.push(`/app/mailbox/${id}`);
+      } else {
+        // update
+        this.editing = false;
+        this.$emit("updated");
+      }
     },
     deleteMailbox() {
       // TODO: Handle submit

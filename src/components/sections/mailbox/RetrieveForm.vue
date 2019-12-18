@@ -15,6 +15,10 @@
         Votre boîte aux lettres est en cours d'ouverture, nous attendons qu'une
         soit disponible pour vous l'attribuer.
       </div>
+      <div v-else-if="mailbox.status === 'new'">
+        Une boîte aux lettres sera attribuée à la personne dans les meilleurs
+        délais une fois que vous aurez créé son compte.
+      </div>
       <div v-else class="text-m">
         Votre boîte aux lettres a été suspendue par votre association,
         rapprochez vous de cette dernière pour en savoir plus.
