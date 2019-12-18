@@ -117,7 +117,7 @@ export default {
         zip
       },
 
-      pending: faker.random.number(20),
+      pending: faker.random.number({ min: 1, max: 20 }),
       sendToMail: faker.random.boolean(),
 
       retrieveStatus: faker.random.arrayElement([
