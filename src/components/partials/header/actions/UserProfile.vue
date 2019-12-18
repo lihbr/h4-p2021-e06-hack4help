@@ -1,5 +1,5 @@
 <template>
-  <div class="userProfile flex items-center">
+  <smart-link href="/app/dashboard" class="block userProfile flex items-center">
     <span class="text-p hidden sm:inline-block mr-semibase">{{
       currentUser | fullName
     }}</span>
@@ -8,7 +8,7 @@
       :alt="currentUser | fullName"
       class="w-10 h-10 rounded-full"
     />
-  </div>
+  </smart-link>
 </template>
 
 <script>
