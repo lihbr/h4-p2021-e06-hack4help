@@ -1,22 +1,29 @@
 <template>
   <div class="dashboard container mx-auto px-5 pt-5 pb-semibase">
     <header class="lg:flex justify-between items-center mt-5 mb-base">
-      <h2 class="text-h2 mb-semibase lg:mb-0">
+      <h1 class="text-h2 mb-semibase lg:mb-0">
         Mes boites
         <small
           class="inline-block rounded-full border border-cyan text-cyan px-2 font-main text-xs"
         >
           {{ results.length }}
         </small>
-      </h2>
+      </h1>
       <div class="actions -mx-semibase sm:-my-semibase sm:flex">
-        <cta-button href="/app/mailbox/new" blank class="px-10 m-semibase">
+        <cta-button
+          href="/app/mailbox/new"
+          blank
+          small
+          class="px-10 m-semibase"
+        >
           Ajouter un bénéficiaire
         </cta-button>
         <input-string
           v-model="query"
           placeholder="Rechercher un bénéficiaire..."
           class="m-semibase flex-1 max-w-full lg:w-col-3"
+          small
+          dark
         >
           <template v-slot:before>
             <icon-search class="iconSearch" />
@@ -90,7 +97,7 @@
         <div
           v-for="(result, index) in paginatedAndFilteredResults"
           :key="`${index}-${result.firstName}-${result.lastName}`"
-          class="row text-p cursor-pointer hover:bg-grey p-4 relative"
+          class="row text-p cursor-pointer hover:bg-grey p-semibase relative"
           :title="result | fullName"
           @click="$router.push(`/app/mailbox/${result.id}`)"
         >
@@ -263,15 +270,16 @@ export default {
         id: faker.random.uuid(),
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
-        pending: faker.random.number(20),
+        pending: faker.random.number(20), // owned by mailbox
         lastLogin: faker.date.between(new Date(now - month * 6), new Date(now)),
-        status: faker.random.arrayElement(["queued", "active", "suspended"])
+        status: faker.random.arrayElement(["queued", "active", "suspended"]) // owned by mailbox
       });
     }
 
     return { results };
   },
   created() {
+    // TODO: Actually fetch user
     this.$store.commit("currentUser/setFake");
   },
   methods: {
@@ -365,9 +373,4 @@ export default {
 
       svg
         @apply w-4 h-4
-</style>
-
-<style lang="sass">
-body
-  @apply overflow-y-scroll
 </style>

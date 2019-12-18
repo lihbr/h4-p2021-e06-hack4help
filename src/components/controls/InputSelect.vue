@@ -1,33 +1,34 @@
 <template>
   <div
-    class="inputString flex px-5 rounded border items-center"
+    class="inputSelect flex rounded border items-center relative"
     :class="[{ small }, dark ? 'border-grey-800' : 'border-grey-600']"
   >
-    <slot name="before" />
-    <input
-      :id="type === 'file' ? '' : linkId"
-      v-model="cValue"
-      class="bg-none text-p h-full outline-none w-full"
-      :class="{ 'pointer-events-none': type === 'file' }"
-      :type="type === 'file' ? 'text' : type"
-      :placeholder="placeholder"
-      :disabled="disabled || type === 'file'"
-    />
-    <input
-      v-if="type === 'file'"
+    <select
       :id="linkId"
-      ref="file"
-      type="file"
-      class="hidden"
+      v-model="cValue"
+      class="bg-none text-p h-full outline-none w-full appearance-none pl-5 pr-10"
+      :type="type"
+      :placeholder="placeholder"
       :disabled="disabled"
-      @input="fileSelected"
-    />
-    <slot name="after" />
+    >
+      <option
+        v-for="(option, index) in options"
+        :key="`${index}-${option ? option.toLowerCase() : 'empty'}`"
+      >
+        {{ option | ucFirst }}
+      </option>
+    </select>
+    <icon-arrow-down class="absolute right-5 top-50p transform-center-y" />
   </div>
 </template>
 
 <script>
+import IconArrowDown from "~/assets/icons/arrow--down.svg";
+
 export default {
+  components: {
+    IconArrowDown
+  },
   props: {
     type: {
       type: String,
@@ -38,8 +39,12 @@ export default {
       default: ""
     },
     value: {
-      type: [String, Number],
+      type: String,
       default: ""
+    },
+    options: {
+      type: Array,
+      default: () => []
     },
     disabled: {
       type: Boolean,
@@ -70,21 +75,12 @@ export default {
     value() {
       this.cValue = this.value;
     }
-  },
-  methods: {
-    fileSelected() {
-      const path = this.$refs.file.value
-        .split("/")
-        .map(i => i.split("\\"))
-        .flat();
-      this.$emit("input", path[path.length - 1]);
-    }
   }
 };
 </script>
 
 <style lang="sass" scoped>
-.inputString
+.inputSelect
   height: 50px
 
   &.small

@@ -67,4 +67,10 @@ export default {
 };
 </script>
 
-<style lang="sass"></style>
+<style lang="sass">
+html
+  @apply overflow-y-scroll
+
+.__layout__app
+  @apply min-h-screen relative
+</style>

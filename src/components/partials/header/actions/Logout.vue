@@ -1,6 +1,7 @@
 <template>
   <button
     class="logout flex items-center px-2 -mx-2 rounded-full hover:bg-grey-600 cursor-pointer transition-bg transition-half min-w-10 justify-center"
+    title="Déconnexion"
     @click="logout"
   >
     <icon-logout />
@@ -17,6 +18,7 @@ export default {
   },
   methods: {
     logout() {
+      // TODO: Handle logout
       window.alert("TODO: Handle logout");
     }
   }

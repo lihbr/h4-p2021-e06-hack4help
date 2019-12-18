@@ -1,5 +1,9 @@
 <template>
-  <smart-link href="/app/dashboard" class="block userProfile flex items-center">
+  <smart-link
+    href="/app/dashboard"
+    class="block userProfile flex items-center"
+    title="Dashboard"
+  >
     <span class="text-p hidden sm:inline-block mr-semibase">{{
       currentUser | fullName
     }}</span>
