@@ -27,17 +27,17 @@
       </ul>
       <ul class="socials mt-semibase lg:mt-0">
         <li>
-          <smart-link href="https://facebook.com">
+          <smart-link href="https://facebook.com" blank>
             <icon-facebook />
           </smart-link>
         </li>
         <li>
-          <smart-link href="https://instagram.com">
+          <smart-link href="https://www.instagram.com/uneadressepourtous" blank>
             <icon-instagram />
           </smart-link>
         </li>
         <li>
-          <smart-link href="https://twitter.com">
+          <smart-link href="https://twitter.com" blank>
             <icon-twitter />
           </smart-link>
         </li>
