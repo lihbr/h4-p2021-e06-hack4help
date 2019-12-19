@@ -280,13 +280,15 @@ export default {
   },
   async created() {
     try {
-      const {
-        data: { me }
-      } = await this.$apollo.query({
-        query: MeQuery
-      });
+      if (!this.$store.state.currentUser.id) {
+        const {
+          data: { me }
+        } = await this.$apollo.query({
+          query: MeQuery
+        });
 
-      this.$store.commit("currentUser/set", me);
+        this.$store.commit("currentUser/set", me);
+      }
     } catch (e) {
       window.alert("Something went wrong while getting data");
       console.error(e);

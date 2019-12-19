@@ -24,7 +24,8 @@ export default {
       return this.$store.state.currentUser;
     },
     gravatar() {
-      const hash = md5(this.currentUser.email);
+      console.log(this.currentUser);
+      const hash = md5(this.currentUser.mail);
 
       return `https://s.gravatar.com/avatar/${hash}?s=80`;
     }

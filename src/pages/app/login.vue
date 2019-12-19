@@ -146,6 +146,11 @@ export default {
   },
   data() {
     return {
+      errors: [],
+      email: "",
+      password: "",
+      editing: false,
+      isRecipient: false,
       authentication: {
         email: "",
         password: ""

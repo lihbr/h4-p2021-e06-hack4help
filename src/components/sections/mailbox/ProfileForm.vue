@@ -221,7 +221,7 @@ export default {
       return true;
     },
     creating() {
-      return this.mailbox.status === "new";
+      return this.$router.currentRoute.params.id === "new";
     }
   },
   watch: {
@@ -239,34 +239,32 @@ export default {
     }
   },
   mounted() {
+    console.log("BEFORE");
     this.cRecipient = this.recipient;
     this.cMailbox = this.mailbox;
+    console.log("After");
   },
   methods: {
     submit() {
-      // TODO: Handle submit
-      window.alert("TODO: Handle submit");
-
       console.log(this.creating);
 
       if (this.creating) {
-        // creating
-        console.log("oui");
-
-        const { id } = { id: "636cb36d-ddc5-4bd8-860f-4d2f769a057e" }; // await...
-        this.$router.push(`/app/mailbox/${id}`);
+        this.$emit("create", {
+          mailBox: this.cMailbox,
+          recipient: this.cRecipient
+        });
       } else {
         // update
         this.editing = false;
-        this.$emit("updated");
+        this.$emit("update", {
+          recipient: this.cRecipient,
+          mailBox: this.cMailbox
+        });
       }
     },
     deleteMailbox() {
-      // TODO: Handle submit
-      window.alert("TODO: Handle submit");
-
       this.deleting = false;
-      this.$router.push("/app/dashboard");
+      this.$emit("delete");
     }
   }
 };

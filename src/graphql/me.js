@@ -6,7 +6,7 @@ export const MeQuery = gql`
       id
       firstName
       lastName
-      email: mail
+      mail
       lastLogin
       group
       document {
