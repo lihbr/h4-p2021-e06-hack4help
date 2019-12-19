@@ -221,7 +221,7 @@ export default {
       return true;
     },
     creating() {
-      return this.$router.currentRoute.params.id === "new";
+      return this.$route.params.id === "new";
     }
   },
   watch: {
@@ -244,8 +244,6 @@ export default {
   },
   methods: {
     submit() {
-      console.log(this.creating);
-
       if (this.creating) {
         this.$emit("create", {
           mailBox: this.cMailbox,
