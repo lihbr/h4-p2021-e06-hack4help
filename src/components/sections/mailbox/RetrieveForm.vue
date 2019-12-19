@@ -2,7 +2,9 @@
   <div class="retrieveForm">
     <div class="text-center pb-base">
       <img-mailbox class="mx-auto mb-12" />
-      <template v-if="mailbox.status === 'active'">
+      <template
+        v-if="mailbox.status && mailbox.status.toLowerCase() === 'active'"
+      >
         <div class="text-7xl font-medium leading-tight">
           {{ mailbox.pending >= 0 ? mailbox.pending : "?" }}
         </div>
@@ -11,11 +13,14 @@
           {{ wording[mailbox.retrieveStatus] }}
         </div>
       </template>
-      <div v-else-if="mailbox.status === 'queued'" class="text-m">
+      <div
+        v-else-if="mailbox.status && mailbox.status.toLowerCase() === 'queued'"
+        class="text-m"
+      >
         Votre boîte aux lettres est en cours d'ouverture, nous attendons qu'une
         soit disponible pour vous l'attribuer.
       </div>
-      <div v-else-if="mailbox.status === 'new'">
+      <div v-else-if="mailbox.status && mailbox.status.toLowerCase() === 'new'">
         Une boîte aux lettres sera attribuée à la personne dans les meilleurs
         délais une fois que vous aurez créé son compte.
       </div>
@@ -25,14 +30,17 @@
       </div>
     </div>
     <div
-      v-if="mailbox.status === 'active'"
+      v-if="mailbox.status && mailbox.status.toLowerCase() === 'active'"
       class="pt-8 border-t border-grey-600"
     >
       <h3 class="text-center text-m font-semibold mb-base">
         Retirer mon courrier
       </h3>
       <form
-        v-if="mailbox.retrieveStatus === 'available'"
+        v-if="
+          mailbox.retrieveStatus &&
+            mailbox.retrieveStatus.toLowerCase() === 'available'
+        "
         @submit.prevent="submit"
       >
         <div class="radio text-p mb-semibase">
@@ -77,7 +85,8 @@
       <div v-else class="text-center">
         <div class="mb-semibase">
           {{
-            mailbox.retrieveStatus === "delivering"
+            mailbox.retrieveStatus &&
+            mailbox.retrieveStatus.toLowerCase() === "delivering"
               ? "Votre courrier est en cours d'acheminement vers :"
               : "Votre courrier vous attends à l'adresse suivante :"
           }}
