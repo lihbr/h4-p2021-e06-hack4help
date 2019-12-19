@@ -4,9 +4,7 @@
       <div
         class="bg-grey w-full md:w-3/5 text-center flex flex-col justify-center"
       >
-        <h1>
-          image unsplash
-        </h1>
+        <h1>image unsplash</h1>
       </div>
       <div
         class="bg-white w-full px-10 xl:px-20 md:w-2/5 flex flex-col justify-center items-center"
@@ -14,7 +12,7 @@
         <form
           id="login"
           class="w-full max-w-md"
-          action=""
+          action
           method="post"
           novalidate="true"
           @submit="checkForm"
@@ -24,9 +22,7 @@
               <b v-if="errors.length == 1">
                 Merci de corriger l'erreur suivante :
               </b>
-              <b v-else>
-                Merci de corriger les erreurs suivantes :
-              </b>
+              <b v-else>Merci de corriger les erreurs suivantes :</b>
               <ul>
                 <li v-for="error in errors" :key="error" class="text-red">
                   {{ error }}
@@ -34,9 +30,7 @@
               </ul>
             </div>
             <div class="mb-4">
-              <label class="text-p-200 mb-2" for="email">
-                Adresse mail
-              </label>
+              <label class="text-p-200 mb-2" for="email">Adresse mail</label>
               <input
                 id="email"
                 v-model="email"
@@ -46,9 +40,7 @@
               />
             </div>
             <div class="mb-6">
-              <label class="text-p-200 mb-2" for="password">
-                Mot de passe
-              </label>
+              <label class="text-p-200 mb-2" for="password">Mot de passe</label>
               <input
                 id="password"
                 v-model="password"
@@ -65,9 +57,7 @@
               <a class="text-p-200 ml-2 underline">Mot de passe oublié</a>
             </div>
             <button type="submit" class="w-full mb-12">
-              <cta-button>
-                Se connecter
-              </cta-button>
+              <cta-button>Se connecter</cta-button>
             </button>
           </div>
         </form>
@@ -111,6 +101,7 @@
 // import Component from "~/components/Component.vue"
 import CtaButton from "../../components/controls/CtaButton.vue";
 //import InputString from "../../components/controls/InputString.vue";
+import { LoginQuery } from "../../graphql";
 
 export default {
   layout: "blank",
@@ -124,11 +115,15 @@ export default {
   },
   data() {
     return {
-      errors: []
+      errors: [],
+      email: "",
+      password: ""
     };
   },
   methods: {
     checkForm: function(e) {
+      e.preventDefault();
+
       this.errors = [];
 
       if (!this.email) {
@@ -142,14 +137,34 @@ export default {
       }
 
       if (!this.errors.length) {
+        this.authenticate();
         return true;
       }
 
-      e.preventDefault();
+      return false;
     },
     validEmail: function(email) {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
+    },
+    authenticate: async function() {
+      try {
+        const result = await this.$apollo.mutate({
+          mutation: LoginQuery,
+          variables: {
+            email: this.email,
+
+            password: this.password
+          }
+        });
+
+        this.errors = [];
+        this.$store.commit("currentUser/set", result.data.login.user);
+        this.$apolloHelpers.onLogin(result.data.login.token);
+        this.$nuxt.$router.push("/app/dashboard");
+      } catch (e) {
+        this.errors.push("Email ou mot de passe invalide");
+      }
     }
   }
 };
