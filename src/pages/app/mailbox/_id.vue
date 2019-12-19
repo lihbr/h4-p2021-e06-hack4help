@@ -10,7 +10,9 @@
           <span v-if="isRecipient">Ma boîte postale</span>
           <span v-else>
             <!-- eslint-disable -->
-            <template v-if="mailBox.status === 'new'">Nouvelle adresse...</template>
+            <template v-if="mailBox.status === 'new'">
+              Nouvelle adresse...
+            </template>
             <template v-else>{{ recipient | fullName }}</template>
           </span>
         </h1>
@@ -20,7 +22,9 @@
           href="/app/dashboard"
           title="Retour dashboard"
         >
-          <icon-cross class="icon transition-bg transition-half rounded-full p-1" />
+          <icon-cross
+            class="icon transition-bg transition-half rounded-full p-1"
+          />
         </smart-link>
       </header>
       <div class="forms lg:flex py-12 pb-24">
@@ -114,8 +118,8 @@ export default {
         const currentUser = this.$store.state.currentUser;
 
         if (currentUser.group === "RECIPIENT") {
-          if (currentUser.id !== this.$route.params.id)
-            this.$router.push(`/app/mailbox/${currentUser.id}`);
+          if (currentUser.mailbox !== this.$route.params.id)
+            this.$router.push(`/app/mailbox/${currentUser.mailbox}`);
         }
       }
     } catch (e) {
@@ -163,8 +167,8 @@ export default {
     const currentUser = this.$store.state.currentUser;
 
     if (currentUser.group === "RECIPIENT") {
-      if (currentUser.id !== this.$route.params.id)
-        this.$router.push(`/app/mailbox/${currentUser.id}`);
+      if (currentUser.mailbox !== this.$route.params.id)
+        this.$router.push(`/app/mailbox/${currentUser.mailbox}`);
     }
   },
   methods: {

@@ -11,6 +11,9 @@ export const LoginQuery = gql`
         mail
         lastLogin
         group
+        mailBox {
+          id
+        }
         document {
           file
           name

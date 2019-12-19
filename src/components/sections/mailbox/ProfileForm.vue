@@ -41,7 +41,7 @@
       <input-string
         v-model="cMailbox.address.street"
         link-id="street"
-        :disabled="!editing && !creating && !isRecipient"
+        :disabled="(!editing && !creating) || isRecipient"
         :dark="(editing || creating) && !isRecipient"
       />
     </div>
@@ -51,7 +51,7 @@
         <input-string
           v-model="cMailbox.address.city"
           link-id="city"
-          :disabled="!editing && !creating && !isRecipient"
+          :disabled="(!editing && !creating) || isRecipient"
           :dark="(editing || creating) && !isRecipient"
         />
       </div>
@@ -60,7 +60,7 @@
         <input-string
           v-model="cMailbox.address.zip"
           link-id="zip"
-          :disabled="!editing && !creating && !isRecipient"
+          :disabled="(!editing && !creating) || isRecipient"
           :dark="(editing || creating) && !isRecipient"
         />
       </div>
@@ -72,7 +72,7 @@
           v-model="cRecipient.document.name"
           link-id="document"
           type="file"
-          :disabled="!editing && !creating && !isRecipient"
+          :disabled="(!editing && !creating) || isRecipient"
           :dark="(editing || creating) && !isRecipient"
           class="cursor-pointer"
         >

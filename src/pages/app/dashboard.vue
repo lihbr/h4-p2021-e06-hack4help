@@ -305,7 +305,7 @@ export default {
         const currentUser = this.$store.state.currentUser;
 
         if (currentUser.group === "RECIPIENT") {
-          this.$router.push(`/app/mailbox/${currentUser.id}`);
+          this.$router.push(`/app/mailbox/${currentUser.mailbox}`);
         }
       }
     } catch (e) {
@@ -317,7 +317,7 @@ export default {
     const currentUser = this.$store.state.currentUser;
 
     if (currentUser.group === "RECIPIENT") {
-      this.$router.push(`/app/mailbox/${currentUser.id}`);
+      this.$router.push(`/app/mailbox/${currentUser.mailbox}`);
     }
   },
   methods: {

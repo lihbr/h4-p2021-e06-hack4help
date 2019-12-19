@@ -214,6 +214,8 @@ export default {
         this.$apolloHelpers.onLogin(result.data.login.token);
         this.$nuxt.$router.push("/app/dashboard");
       } catch (e) {
+        console.log(e);
+
         this.authenticationError = true;
       }
     },
