@@ -9,12 +9,9 @@
           <icon-user-green class="icon inline-block" />
           <span v-if="isRecipient">Ma boîte postale</span>
           <span v-else>
-            <template v-if="mailBox.status === 'new'">
-              Nouvelle adresse...
-            </template>
-            <template v-else>
-              {{ recipient | fullName }}
-            </template>
+            <!-- eslint-disable -->
+            <template v-if="mailBox.status === 'new'">Nouvelle adresse...</template>
+            <template v-else>{{ recipient | fullName }}</template>
           </span>
         </h1>
         <smart-link
@@ -23,9 +20,7 @@
           href="/app/dashboard"
           title="Retour dashboard"
         >
-          <icon-cross
-            class="icon transition-bg transition-half rounded-full p-1"
-          />
+          <icon-cross class="icon transition-bg transition-half rounded-full p-1" />
         </smart-link>
       </header>
       <div class="forms lg:flex py-12 pb-24">
@@ -144,16 +139,20 @@ export default {
         console.log(JSON.parse(JSON.stringify(mailBox)));
 
         mailBox.status = mailBox.status.toLowerCase();
-        const recipient = mailBox.recipient;
 
-        delete mailBox.recipient;
         delete mailBox.__typename;
         delete mailBox.address.__typename;
-        delete recipient.document.__typename;
-        delete recipient.__typename;
+        delete mailBox.recipient.document.__typename;
+        delete mailBox.recipient.__typename;
 
-        this.mailBox = mailBox;
-        this.recipient = recipient;
+        const cleanedMailBox = {};
+
+        Object.keys(mailBox).map(key =>
+          key === "recipient" ? false : (cleanedMailBox[key] = mailBox[key])
+        );
+
+        this.mailBox = cleanedMailBox;
+        this.recipient = mailBox.recipient;
       }
     } catch (e) {
       window.alert("Something went wrong while getting data");
