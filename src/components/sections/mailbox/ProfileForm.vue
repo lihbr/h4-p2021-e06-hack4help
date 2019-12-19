@@ -132,7 +132,6 @@
       </div>
       <div v-if="!isRecipient" class="flex -mx-semibase mt-base">
         <cta-button
-          :disabled="editing && !canSubmit"
           class="w-full mx-semibase"
           outline="grey-800"
           @click.native="deleting = false"
@@ -140,7 +139,6 @@
           Annuler
         </cta-button>
         <cta-button
-          :disabled="editing && !canSubmit"
           class="w-full mx-semibase"
           outline="red"
           @click.native="deleteMailbox"
@@ -277,7 +275,7 @@ export default {
 .profileForm
   .inputWrapper
     label
-      @apply text-xsAlt text-grey-800
+      @apply text-xsAlt text-grey-800 leading-loose
 
     &.city
       margin-right: 10px
