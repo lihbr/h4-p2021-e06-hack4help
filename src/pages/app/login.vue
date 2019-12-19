@@ -162,8 +162,6 @@ export default {
       errors: [],
       email: "",
       password: "",
-      editing: false,
-      isRecipient: false,
       authentication: {
         email: "",
         password: ""
