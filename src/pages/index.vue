@@ -3,14 +3,14 @@
     <section class="container mx-auto px-5 md:flex items-center py-20">
       <div class="md:w-1/2">
         <h1 class="text-h1 max-w-col-4 mb-base">
-          Offrez une adresse pour une personne sans-domicile
+          Offrez une adresse à une personne sans domicile fixe
         </h1>
         <p class="text-p-600">
-          Saviez vous que 40% des sans-abris ne touchent pas les allocations
-          auxquels ils auraient droit car ils n’ont pas d’adresse ? Avoir une
-          adresse c’est pouvoir ouvrir un compte bancaire, profiter d’une
-          abonnement téléphonique, disposer d’une carte électorale ou encore
-          pouvoir recevoir ses papiers d’identités !
+          Saviez vous que 40% des personnes sans-abri ne touchent pas les
+          allocations auxquelles elles auraient droit car elles n’ont pas
+          d’adresse ? Avoir une adresse c’est pouvoir ouvrir un compte bancaire,
+          profiter d’une abonnement téléphonique, disposer d’une carte
+          électorale ou encore pouvoir recevoir ses papiers d’identités !
         </p>
       </div>
       <img-sending-mail
@@ -39,7 +39,7 @@
       <ul class="md:hidden text-left -my-semibase">
         <li class="my-semibase">
           <h4 class="text-h2">
-            Les personnes sans-domicile
+            Les personnes sans domicile fixe
           </h4>
           <p class="text-p">
             Ont besoin d’une adresse pour bénéficier de leurs droits.

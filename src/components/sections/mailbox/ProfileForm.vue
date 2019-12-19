@@ -67,7 +67,7 @@
     </div>
     <div class="inputWrapper mb-semibase">
       <label for="document">
-        <div class="mb-1">Adresse postale</div>
+        <div class="mb-1">Carte d'identité</div>
         <input-string
           v-model="cRecipient.document.name"
           link-id="document"

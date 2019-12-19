@@ -2,15 +2,23 @@
   <div class="login">
     <div class="flex flex-wrap h-screen">
       <div
-        class="bg-grey w-full md:w-3/5 text-center flex flex-col justify-center"
+        class="bg-grey w-full hidden md:flex md:w-3/5 text-center flex-col justify-center items-center px-20"
       >
-        <h1>
-          image unsplash
-        </h1>
+        <img-letter class="w-full" />
       </div>
       <div
         class="bg-white w-full px-10 xl:px-20 md:w-2/5 flex flex-col justify-center items-center"
       >
+        <smart-link
+          href="/"
+          class="logo block items-center font-sub text-l font-medium"
+        >
+          <span class="text-left">Retour</span>
+        </smart-link>
+        <img-logo class="w-full h-24 mb-6 mt-10" />
+        <h2 class="text-h2 mb-10">
+          Une adresse pour tous
+        </h2>
         <form
           id="login"
           class="w-full max-w-md"
@@ -72,44 +80,56 @@
           </div>
         </form>
         <div class="h-px w-full bg-grey-600 mb-10"></div>
-        <h2 class="text-h2 mb-6">
-          Rejoindre l'aventure
-        </h2>
-        <p class="p text-grey-800 mb-6">
-          Vous êtes une association et vous souhaitez créer un espace ?
-        </p>
-        <cta-button class="w-full">
-          Faire une demande
-        </cta-button>
-        <!--<div class="text-p-200">Adresse email</div>
-        <input-string
-          v-model="email"
-          placeholder="nomprenom@email.net"
-          class="mx-semibase flex-1 max-w-full md:w-col-3"
-        >
-          <template v-slot:before>
-            <icon-search class="iconSearch" />
-          </template>
-        </input-string>
-        <div>mot de passe</div>
-        <div>se souvenir / oublié</div>
-        <cta-button class="w-full">
-          Se connecter
-        </cta-button>
-        <div>ligne</div>
-        <h2>Rejoindre l'aventure</h2>
-        <p>Vous êtes une association et vous souhaitez créer un espace ?</p>
-        <cta-button class="w-full">
-          Faire une demande
-        </cta-button>-->
+        <div class="max-w-md">
+          <h2 class="text-h2 mb-6 text-center">
+            Nous contacter
+          </h2>
+          <p class="p text-grey-800 mb-6">
+            Vous êtes une association et vous souhaitez créer un espace ?
+          </p>
+          <cta-button class="w-full mb-10" @click.native="contact = true">
+            Faire une demande
+          </cta-button>
+        </div>
       </div>
     </div>
+    <modal :active="contact" @close="contact = false">
+      <div class="text-h2 mb-base">
+        Suppression d'une boîte
+      </div>
+      <p class="p text-grey-800 mb-6">
+        Une question, une remarque à nous communiquez ? N'hésitez pas à nous
+        écrire !
+      </p>
+      <div v-if="!isRecipient" class="flex -mx-semibase mt-base">
+        <cta-button
+          :disabled="editing && !canSubmit"
+          class="w-full mx-semibase"
+          outline="grey-800"
+          @click.native="contact = false"
+        >
+          Annuler
+        </cta-button>
+        <cta-button
+          :disabled="editing && !canSubmit"
+          class="w-full mx-semibase"
+          outline="red"
+          @click.native="sendingContact"
+        >
+          Confirmer
+        </cta-button>
+      </div>
+    </modal>
   </div>
 </template>
 
 <script>
 // import Component from "~/components/Component.vue"
-import CtaButton from "../../components/controls/CtaButton.vue";
+import CtaButton from "~/components/controls/CtaButton.vue";
+import ImgLetter from "~/assets/img/letter.svg";
+import ImgLogo from "~/assets/img/logo.svg";
+import Modal from "~/components/controls/Modal.vue";
+
 //import InputString from "../../components/controls/InputString.vue";
 
 export default {
@@ -119,12 +139,17 @@ export default {
   },
   components: {
     // Component
-    CtaButton
+    CtaButton,
+    ImgLetter,
+    ImgLogo,
+    Modal
     //InputString
   },
   data() {
     return {
-      errors: []
+      errors: [],
+      contact: false,
+      editing: false
     };
   },
   methods: {
@@ -150,6 +175,13 @@ export default {
     validEmail: function(email) {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
+    },
+    sendingContact() {
+      // TODO: Handle submit
+      window.alert("TODO: Handle submit");
+
+      this.contact = false;
+      this.$router.push("/app/login");
     }
   }
 };
