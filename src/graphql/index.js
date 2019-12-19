@@ -6,3 +6,5 @@ export { UpdateMailBoxMutation } from "./updateMailBox";
 export { UpdateUserMutation } from "./updateUser";
 export { DeleteMailBoxMutation } from "./deleteMailBox";
 export { DeleteUserMutation } from "./deleteUser";
+export { CreateMailBoxMutation } from "./createMailBox";
+export { CreateUserMutation } from "./createUser";

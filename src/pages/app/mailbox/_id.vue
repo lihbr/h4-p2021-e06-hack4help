@@ -37,6 +37,7 @@
           :is-recipient="isRecipient"
           @update="refreshInfo"
           @delete="deleteInfo"
+          @create="createInfo"
         />
       </div>
     </section>
@@ -50,7 +51,9 @@ import {
   UpdateMailBoxMutation,
   UpdateUserMutation,
   DeleteMailBoxMutation,
-  DeleteUserMutation
+  DeleteUserMutation,
+  CreateMailBoxMutation,
+  CreateUserMutation
 } from "../../../graphql";
 
 import RetrieveForm from "~/components/sections/mailbox/RetrieveForm.vue";
@@ -157,7 +160,7 @@ export default {
         await this.$apollo.mutate({
           mutation: UpdateUserMutation,
           variables: {
-            userId: this.recipient.id,
+            id: this.recipient.id,
             data
           }
         });
@@ -178,8 +181,6 @@ export default {
       }
     },
     async deleteInfo() {
-      console.log(this.mailBoxId, this.recipient.id);
-
       await this.$apollo.mutate({
         mutation: DeleteMailBoxMutation,
         variables: {
@@ -195,6 +196,52 @@ export default {
       });
 
       this.$router.push("/app/dashboard");
+    },
+    async createInfo({ mailBox, recipient }) {
+      // Vraiment pas opti, j'aurai du faire une requête qui regroupe ces 3 :'(
+      const {
+        data: {
+          createUser: { user }
+        }
+      } = await this.$apollo.mutate({
+        mutation: CreateUserMutation,
+        variables: {
+          data: {
+            ...recipient,
+            group: "RECIPIENT",
+            document: {
+              file: "file",
+              name: "name"
+            }
+          }
+        }
+      });
+
+      mailBox.address.zip = parseInt(mailBox.address.zip);
+
+      const {
+        data: { createMailBox: createdMailBox }
+      } = await this.$apollo.mutate({
+        mutation: CreateMailBoxMutation,
+        variables: {
+          data: {
+            recipient: user.id,
+            ...mailBox
+          }
+        }
+      });
+
+      await this.$apollo.mutate({
+        mutation: UpdateUserMutation,
+        variables: {
+          id: user.id,
+          data: {
+            mailBox: createdMailBox.id
+          }
+        }
+      });
+
+      this.$router.push(`/app/mailbox/${createdMailBox.id}`);
     }
   }
 };

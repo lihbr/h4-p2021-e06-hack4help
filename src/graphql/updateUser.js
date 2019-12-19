@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const UpdateUserMutation = gql`
-  mutation UpdateUserMutation($userId: String!, $data: UpdateUserInput!) {
-    updateUser(id: $userId, data: $data) {
+  mutation UpdateUserMutation($id: String!, $data: UpdateUserInput!) {
+    updateUser(id: $id, data: $data) {
       id
     }
   }

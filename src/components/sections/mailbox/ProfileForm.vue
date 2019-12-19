@@ -221,7 +221,7 @@ export default {
       return true;
     },
     creating() {
-      return this.mailbox.status === "new";
+      return this.$router.currentRoute.params.id === "new";
     }
   },
   watch: {
@@ -249,11 +249,10 @@ export default {
       console.log(this.creating);
 
       if (this.creating) {
-        // creating
-        console.log("oui");
-
-        const { id } = { id: "636cb36d-ddc5-4bd8-860f-4d2f769a057e" }; // await...
-        this.$router.push(`/app/mailbox/${id}`);
+        this.$emit("create", {
+          mailBox: this.cMailbox,
+          recipient: this.cRecipient
+        });
       } else {
         // update
         this.editing = false;
