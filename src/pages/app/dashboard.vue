@@ -283,7 +283,8 @@ export default {
       const {
         data: { mailBoxes }
       } = await client.query({
-        query: MailBoxesQuery
+        query: MailBoxesQuery,
+        fetchPolicy: "network-only"
       });
 
       return { mailBoxes };
