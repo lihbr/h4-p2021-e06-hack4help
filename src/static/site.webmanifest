@@ -8,13 +8,12 @@
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-384x384.png",
-      "sizes": "384x384",
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],
-  "theme_color": "#b91d47",
-  "background_color": "#b91d47",
-  "start_url": "https://adresse-pour-tous.netlify.com",
+  "theme_color": "#fefefe",
+  "background_color": "#fefefe",
   "display": "standalone"
 }
