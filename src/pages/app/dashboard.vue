@@ -78,7 +78,7 @@
               {{ result.pending }}
             </td>
             <td>
-              {{ result.lastLogin.toDateString() }}
+              {{ result.lastLogin }}
             </td>
             <td
               class="status pl-5 pr-16 relative"
@@ -118,7 +118,8 @@
             Courriers en attente : <em>{{ result.pending }}</em>
           </div>
           <div>
-            Dernière connexion : <em>{{ result.lastLogin.toDateString() }}</em>
+            Dernière connexion :
+            <em>{{ result.lastLogin }}</em>
           </div>
         </div>
       </div>
@@ -175,6 +176,7 @@
 
 <script>
 import faker from "faker";
+import { MeQuery, MailBoxesQuery } from "../../graphql";
 
 import CtaButton from "~/components/controls/CtaButton.vue";
 import InputString from "~/components/controls/InputString.vue";
@@ -185,7 +187,7 @@ import IconArrowLeft from "~/assets/icons/arrow--left.svg";
 import IconArrowRight from "~/assets/icons/arrow--right.svg";
 
 export default {
-  // middleware: "isAuth",
+  middleware: "isAuth",
   layout: "app",
   head: {
     title: "Dashboard"
@@ -199,6 +201,7 @@ export default {
     IconArrowLeft,
     IconArrowRight
   },
+  middleware: "isAuth",
   data() {
     return {
       query: "",
@@ -209,12 +212,25 @@ export default {
         status: "none"
       },
       resultsPerPage: 16,
-      currentPage: 1
+      currentPage: 1,
+      loading: true,
+      mailBoxes: [],
+      results: []
     };
   },
   computed: {
     filteredResults() {
-      let results = [...this.results];
+      let results = this.mailBoxes.map(mailBox => {
+        const res = {
+          ...mailBox,
+          ...mailBox.recipient
+        };
+
+        res.status = res.status.toLowerCase();
+        res.lastLogin = new Date(parseInt(res.lastLogin)).toDateString();
+
+        return res;
+      });
 
       if (this.query.trim() !== "") {
         results = results.filter(result =>
@@ -262,28 +278,32 @@ export default {
       this.currentPage = 1;
     }
   },
-  async asyncData() {
-    // TODO: Perform actual query
-    const totalLength = faker.random.number({ min: 40, max: 500 });
-    const results = [];
-    const now = Date.now();
-    const month = 1000 * 3600 * 24 * 30;
-    for (let i = 0; i < totalLength; i++) {
-      results.push({
-        id: faker.random.uuid(),
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
-        pending: faker.random.number(20), // owned by mailbox
-        lastLogin: faker.date.between(new Date(now - month * 6), new Date(now)),
-        status: faker.random.arrayElement(["queued", "active", "suspended"]) // owned by mailbox
+  async created() {
+    try {
+      const {
+        data: { me }
+      } = await this.$apollo.query({
+        query: MeQuery
       });
+
+      this.$store.commit("currentUser/set", me);
+    } catch (e) {
+      window.alert("Something went wrong while getting data");
+      console.error(e);
     }
 
-    return { results };
-  },
-  created() {
-    // TODO: Actually fetch user
-    this.$store.commit("currentUser/setFake");
+    try {
+      const {
+        data: { mailBoxes }
+      } = await this.$apollo.query({
+        query: MailBoxesQuery
+      });
+
+      this.mailBoxes = mailBoxes;
+    } catch (e) {
+      window.alert("Something went wrong while getting data");
+      console.error(e);
+    }
   },
   methods: {
     resetOtherSort(ignore) {
