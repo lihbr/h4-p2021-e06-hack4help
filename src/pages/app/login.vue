@@ -1,5 +1,5 @@
 <template>
-  <div class="login flex items-center justify-between h-screen">
+  <div class="login lg:flex items-center justify-between lg:h-screen">
     <smart-link
       href="/"
       class="absolute top-base left-semibase lg:left-col text-grey-800 font-medium text-l"
@@ -8,7 +8,7 @@
     </smart-link>
     <img-letter class="flex-1 mx-base hidden lg:block" />
     <div
-      class="bg-white min-h-screen w-full px-semibase lg:px-col lg:pt-col lg:pb-base lg:w-col-5 lg:h-screen lg:overflow-x-auto"
+      class="bg-white min-h-screen pt-base-2 pb-base lg:min-h-auto w-full px-semibase lg:px-col lg:pt-col lg:pb-base lg:w-col-5 lg:h-screen lg:overflow-x-auto"
     >
       <figure class="mb-10 sm:mb-20">
         <img-logo class="w-full h-24 mb-6 mt-10" />
