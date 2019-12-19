@@ -78,7 +78,7 @@ module.exports = async () => {
     /*
      ** Customize the progress-bar color
      */
-    loading: { color: "#000000" },
+    loading: { color: "#06b2ba" },
 
     /*
      ** Global CSS
