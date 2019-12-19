@@ -31,7 +31,7 @@
               v-model="authentication.password"
               link-id="password"
               placeholder="Votre mot de passe"
-              type="mail"
+              type="password"
             />
           </div>
 
