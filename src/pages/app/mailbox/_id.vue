@@ -9,7 +9,7 @@
           <icon-user-green class="icon inline-block" />
           <span v-if="isRecipient">Ma boîte postale</span>
           <span v-else>
-            <template v-if="mailbox.status === 'new'">
+            <template v-if="mailBox.status === 'new'">
               Nouvelle adresse...
             </template>
             <template v-else>
@@ -29,13 +29,14 @@
         </smart-link>
       </header>
       <div class="forms lg:flex py-12 pb-24">
-        <retrieve-form :mailbox="mailbox" @updated="refreshInfo" />
+        <retrieve-form :mailbox="mailBox" @updated="refreshInfo" />
         <profile-form
           class="relative"
           :recipient="recipient"
-          :mailbox="mailbox"
+          :mailbox="mailBox"
           :is-recipient="isRecipient"
-          @updated="refreshInfo"
+          @update="refreshInfo"
+          @delete="deleteInfo"
         />
       </div>
     </section>
@@ -43,7 +44,14 @@
 </template>
 
 <script>
-import faker from "faker";
+import {
+  MeQuery,
+  MailBoxQuery,
+  UpdateMailBoxMutation,
+  UpdateUserMutation,
+  DeleteMailBoxMutation,
+  DeleteUserMutation
+} from "../../../graphql";
 
 import RetrieveForm from "~/components/sections/mailbox/RetrieveForm.vue";
 import ProfileForm from "~/components/sections/mailbox/ProfileForm.vue";
@@ -52,7 +60,7 @@ import IconUserGreen from "~/assets/icons/user--green.svg";
 import IconCross from "~/assets/icons/cross.svg";
 
 export default {
-  // middleware: "isAuth",
+  middleware: "isAuth",
   layout: "app",
   head: {
     title: "Adresse"
@@ -64,115 +72,129 @@ export default {
     IconUserGreen,
     IconCross
   },
-  computed: {
-    currentUser() {
-      return this.$store.state.currentUser;
-    },
-    isRecipient() {
-      return this.currentUser.group === "recipient";
-    }
-  },
-  async asyncData({ params }) {
-    // TODO: Perform actual query
-    console.log(params);
-
-    if (params.id === "new") {
-      const recipient = {
+  data() {
+    return {
+      recipient: {
         firstName: "",
         lastName: "",
         mail: "",
         document: {
           name: ""
         }
-      };
-      const mailbox = {
-        status: "new",
+      },
+      mailBox: {
         address: {
           street: "",
           city: "",
           zip: 0
         }
-      };
-      return { recipient, mailbox };
-    }
-
-    const firstName = faker.name.firstName();
-    const lastName = faker.name.lastName();
-    const mail = `${firstName}.${lastName}@adresse-pour-tous.fr`.toLowerCase();
-
-    const recipient = {
-      id: faker.random.uuid(),
-      firstName,
-      lastName,
-      mail,
-      document: {
-        file: `${faker.random.uuid()}.pdf`,
-        name: `${lastName}.pdf`
       }
     };
-
-    const streetNumber = faker.random.number({
-      min: 1,
-      max: 200
-    });
-    const roadType = faker.random.arrayElement([
-      "Rue",
-      "Allée",
-      "Boulevard",
-      "Impasse",
-      "Avenue"
-    ]);
-    const roadName = faker.name.lastName();
-    const city = faker.random.arrayElement([
-      "Paris",
-      "Montreuil",
-      "Clichy",
-      "Marne la vallée",
-      "Fontenay",
-      "Puteaux",
-      "Suresnes"
-    ]);
-    const zip =
-      faker.random.number({
-        min: 7500,
-        max: 9500
-      }) * 10;
-
-    const mailbox = {
-      status: faker.random.arrayElement(["queued", "active", "suspended"]),
-
-      address: {
-        street: `${streetNumber} ${roadType} ${roadName}`,
-        city,
-        zip
-      },
-
-      pending: faker.random.number({ min: 1, max: 20 }),
-      sendToMail: faker.random.boolean(),
-
-      retrieveStatus: faker.random.arrayElement([
-        "available",
-        "delivering",
-        "delivered"
-      ])
-    };
-
-    return { recipient, mailbox };
   },
-  created() {
-    // TODO: Actually fetch user
-    this.$store.commit("currentUser/setFake");
+  computed: {
+    currentUser() {
+      return this.$store.state.currentUser;
+    },
+    isRecipient() {
+      return this.currentUser.group === "recipient";
+    },
+    mailBoxId() {
+      return this.$nuxt.$router.currentRoute.params.id;
+    }
+  },
+  async created() {
+    try {
+      if (!this.$store.state.currentUser.id) {
+        const {
+          data: { me }
+        } = await this.$apollo.query({
+          query: MeQuery
+        });
+
+        this.$store.commit("currentUser/set", me);
+      }
+    } catch (e) {
+      window.alert("Something went wrong while getting data");
+      console.error(e);
+    }
+
+    try {
+      if (this.mailBoxId !== "new") {
+        const {
+          data: { mailBox }
+        } = await this.$apollo.query({
+          query: MailBoxQuery,
+          variables: {
+            id: this.mailBoxId
+          }
+        });
+        mailBox.status = mailBox.status.toLowerCase();
+        const recipient = mailBox.recipient;
+
+        delete mailBox.recipient;
+        delete mailBox.__typename;
+        delete mailBox.address.__typename;
+        delete recipient.document.__typename;
+        delete recipient.__typename;
+
+        console.log(mailBox);
+        this.mailBox = mailBox;
+        this.recipient = recipient;
+      }
+    } catch (e) {
+      window.alert("Something went wrong while getting data");
+      console.error(e);
+    }
   },
   methods: {
-    async refreshInfo() {
-      // TODO: Handle refresh
-      window.alert("TODO: Handle refresh");
+    async refreshInfo({ recipient, mailBox }) {
+      try {
+        const data = {};
+        Object.keys(recipient).map(key =>
+          key === "id" ? false : (data[key] = recipient[key])
+        );
 
-      const refreshedRecipient = {}; // await...
-      const refreshedMailbox = {}; // await...
+        await this.$apollo.mutate({
+          mutation: UpdateUserMutation,
+          variables: {
+            userId: this.recipient.id,
+            data
+          }
+        });
 
-      // this.recipient = refreshedRecipient;
-      // this.mailbox = refreshedMailbox;
+        mailBox.status = mailBox.status.toUpperCase();
+        mailBox.address.zip = parseInt(mailBox.address.zip);
+
+        await this.$apollo.mutate({
+          mutation: UpdateMailBoxMutation,
+          variables: {
+            id: this.mailBoxId,
+            data: mailBox
+          }
+        });
+      } catch (e) {
+        window.alert("Somthing went wrong while updating data");
+        console.log(e);
+      }
+    },
+    async deleteInfo() {
+      console.log(this.mailBoxId, this.recipient.id);
+
+      await this.$apollo.mutate({
+        mutation: DeleteMailBoxMutation,
+        variables: {
+          id: this.mailBoxId
+        }
+      });
+
+      await this.$apollo.mutate({
+        mutation: DeleteUserMutation,
+        variables: {
+          id: this.recipient.id
+        }
+      });
+
+      this.$router.push("/app/dashboard");
     }
   }
 };

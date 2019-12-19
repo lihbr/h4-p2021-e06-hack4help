@@ -144,7 +144,8 @@ export default {
       email: "",
       password: "",
       contact: false,
-      editing: false
+      editing: false,
+      isRecipient: false
     };
   },
   methods: {

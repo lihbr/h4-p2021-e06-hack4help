@@ -280,19 +280,23 @@ export default {
   },
   async created() {
     try {
-      const {
-        data: { me }
-      } = await this.$apollo.query({
-        query: MeQuery
-      });
+      console.log("Update - 1");
+      if (!this.$store.state.currentUser.id) {
+        const {
+          data: { me }
+        } = await this.$apollo.query({
+          query: MeQuery
+        });
 
-      this.$store.commit("currentUser/set", me);
+        this.$store.commit("currentUser/set", me);
+      }
     } catch (e) {
       window.alert("Something went wrong while getting data");
       console.error(e);
     }
 
     try {
+      console.log("Update - 2");
       const {
         data: { mailBoxes }
       } = await this.$apollo.query({

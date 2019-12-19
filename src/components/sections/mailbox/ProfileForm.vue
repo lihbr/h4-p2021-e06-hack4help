@@ -241,14 +241,13 @@ export default {
     }
   },
   mounted() {
+    console.log("BEFORE");
     this.cRecipient = this.recipient;
     this.cMailbox = this.mailbox;
+    console.log("After");
   },
   methods: {
     submit() {
-      // TODO: Handle submit
-      window.alert("TODO: Handle submit");
-
       console.log(this.creating);
 
       if (this.creating) {
@@ -260,15 +259,15 @@ export default {
       } else {
         // update
         this.editing = false;
-        this.$emit("updated");
+        this.$emit("update", {
+          recipient: this.cRecipient,
+          mailBox: this.cMailbox
+        });
       }
     },
     deleteMailbox() {
-      // TODO: Handle submit
-      window.alert("TODO: Handle submit");
-
       this.deleting = false;
-      this.$router.push("/app/dashboard");
+      this.$emit("delete");
     }
   }
 };
