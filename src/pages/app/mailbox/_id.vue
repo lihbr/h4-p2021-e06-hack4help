@@ -102,7 +102,7 @@ export default {
       return this.currentUser.group.toLowerCase() === "recipient";
     },
     mailBoxId() {
-      return this.$nuxt.$router.currentRoute.params.id;
+      return this.$route.params.id;
     }
   },
   async created() {
@@ -130,6 +130,8 @@ export default {
 
     try {
       if (this.mailBoxId !== "new") {
+        console.log("mailboxid", this.mailBoxId);
+
         const {
           data: { mailBox }
         } = await this.$apollo.query({
@@ -138,6 +140,8 @@ export default {
             id: this.mailBoxId
           }
         });
+
+        console.log(JSON.parse(JSON.stringify(mailBox)));
 
         mailBox.status = mailBox.status.toLowerCase();
         const recipient = mailBox.recipient;
@@ -223,7 +227,6 @@ export default {
         variables: {
           data: {
             ...recipient,
-            password: "azerty",
             group: "RECIPIENT",
             document: {
               file: "file",
