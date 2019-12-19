@@ -280,7 +280,6 @@ export default {
   },
   async created() {
     try {
-      console.log("Update - 1");
       if (!this.$store.state.currentUser.id) {
         const {
           data: { me }
@@ -296,7 +295,6 @@ export default {
     }
 
     try {
-      console.log("Update - 2");
       const {
         data: { mailBoxes }
       } = await this.$apollo.query({

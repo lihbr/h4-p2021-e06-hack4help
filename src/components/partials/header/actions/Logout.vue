@@ -18,8 +18,8 @@ export default {
   },
   methods: {
     logout() {
-      // TODO: Handle logout
-      window.alert("TODO: Handle logout");
+      this.$apolloHelpers.onLogout();
+      this.$router.push("/app/login");
     }
   }
 };
