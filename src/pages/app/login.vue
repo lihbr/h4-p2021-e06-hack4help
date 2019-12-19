@@ -1,8 +1,14 @@
 <template>
   <div class="login flex items-center justify-between h-screen">
-    <img-letter class="flex-1" />
+    <smart-link
+      href="/"
+      class="absolute top-base left-semibase lg:left-col text-grey-800 font-medium text-l"
+    >
+      <icon-arrow-left class="inline-block mr-1" />Retour
+    </smart-link>
+    <img-letter class="flex-1 mx-base hidden lg:block" />
     <div
-      class="bg-white md:px-col md:pt-col md:pb-base md:w-col-5 md:h-screen md:overflow-x-auto"
+      class="bg-white min-h-screen w-full px-semibase lg:px-col lg:pt-col lg:pb-base lg:w-col-5 lg:h-screen lg:overflow-x-auto"
     >
       <figure class="mb-10 sm:mb-20">
         <img-logo class="w-full h-24 mb-6 mt-10" />
@@ -49,6 +55,9 @@
           </div>
 
           <div class="inputWrapper mb-10">
+            <small v-if="authenticationError" class="text-red">
+              Identifiant ou mot de passe incorrect.
+            </small>
             <cta-button type="submit" class="w-full" :disabled="!canSubmit">
               Se connecter
             </cta-button>
@@ -125,24 +134,28 @@
 
 <script>
 import CtaButton from "~/components/controls/CtaButton.vue";
+import Modal from "~/components/controls/Modal.vue";
+
+import IconArrowLeft from "~/assets/icons/arrow--left.svg";
 import ImgLetter from "~/assets/img/letter.svg";
 import ImgLogo from "~/assets/img/logo.svg";
-import Modal from "~/components/controls/Modal.vue";
 
 import InputString from "../../components/controls/InputString.vue";
 import { LoginQuery } from "../../graphql";
 
 export default {
   layout: "blank",
+  middleware: "isNotAuth",
   head: {
     title: "Connexion"
   },
   components: {
     CtaButton,
     InputString,
+    Modal,
+    IconArrowLeft,
     ImgLetter,
-    ImgLogo,
-    Modal
+    ImgLogo
   },
   data() {
     return {
@@ -173,6 +186,14 @@ export default {
       const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
       if (!emailRegex.test(this.authentication.email)) return false;
+
+      return true;
+    },
+    canSubmitContact() {
+      if (this.contact.firstName.trim() === "") return false;
+      if (this.contact.lastName.trim() === "") return false;
+      if (this.contact.email.trim() === "") return false;
+      if (this.contact.message.trim() === "") return false;
 
       return true;
     }

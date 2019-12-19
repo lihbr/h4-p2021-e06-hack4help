@@ -14,7 +14,7 @@
           class="mx-2 sm:mx-semibase"
           small
         >
-          Se connecter
+          Mon espace
         </cta-button>
       </div>
     </app-header>

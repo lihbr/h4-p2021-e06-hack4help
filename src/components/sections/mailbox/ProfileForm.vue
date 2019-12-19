@@ -239,10 +239,8 @@ export default {
     }
   },
   mounted() {
-    console.log("BEFORE");
     this.cRecipient = this.recipient;
     this.cMailbox = this.mailbox;
-    console.log("After");
   },
   methods: {
     submit() {

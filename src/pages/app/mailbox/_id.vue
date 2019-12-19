@@ -99,7 +99,7 @@ export default {
       return this.$store.state.currentUser;
     },
     isRecipient() {
-      return this.currentUser.group === "recipient";
+      return this.currentUser.group.toLowerCase() === "recipient";
     },
     mailBoxId() {
       return this.$nuxt.$router.currentRoute.params.id;
@@ -115,6 +115,13 @@ export default {
         });
 
         this.$store.commit("currentUser/set", me);
+
+        const currentUser = this.$store.state.currentUser;
+
+        if (currentUser.group === "RECIPIENT") {
+          if (currentUser.id !== this.$route.params.id)
+            this.$router.push(`/app/mailbox/${currentUser.id}`);
+        }
       }
     } catch (e) {
       window.alert("Something went wrong while getting data");
@@ -131,6 +138,7 @@ export default {
             id: this.mailBoxId
           }
         });
+
         mailBox.status = mailBox.status.toLowerCase();
         const recipient = mailBox.recipient;
 
@@ -140,13 +148,20 @@ export default {
         delete recipient.document.__typename;
         delete recipient.__typename;
 
-        console.log(mailBox);
         this.mailBox = mailBox;
         this.recipient = recipient;
       }
     } catch (e) {
       window.alert("Something went wrong while getting data");
       console.error(e);
+    }
+  },
+  mounted() {
+    const currentUser = this.$store.state.currentUser;
+
+    if (currentUser.group === "RECIPIENT") {
+      if (currentUser.id !== this.$route.params.id)
+        this.$router.push(`/app/mailbox/${currentUser.id}`);
     }
   },
   methods: {
@@ -177,7 +192,7 @@ export default {
         });
       } catch (e) {
         window.alert("Somthing went wrong while updating data");
-        console.log(e);
+        console.error(e);
       }
     },
     async deleteInfo() {
@@ -208,6 +223,7 @@ export default {
         variables: {
           data: {
             ...recipient,
+            password: "azerty",
             group: "RECIPIENT",
             document: {
               file: "file",

@@ -6,7 +6,7 @@
         <small
           class="inline-block rounded-full border border-cyan text-cyan px-2 font-main text-xs"
         >
-          {{ results.length }}
+          {{ mailBoxes.length }}
         </small>
       </h1>
       <div class="actions -mx-semibase sm:-my-semibase sm:flex">
@@ -201,7 +201,6 @@ export default {
     IconArrowLeft,
     IconArrowRight
   },
-  middleware: "isAuth",
   data() {
     return {
       query: "",
@@ -214,8 +213,7 @@ export default {
       resultsPerPage: 16,
       currentPage: 1,
       loading: true,
-      mailBoxes: [],
-      results: []
+      mailBoxes: []
     };
   },
   computed: {
@@ -278,6 +276,22 @@ export default {
       this.currentPage = 1;
     }
   },
+  async asyncData({ app }) {
+    const client = app.apolloProvider.defaultClient;
+
+    try {
+      const {
+        data: { mailBoxes }
+      } = await client.query({
+        query: MailBoxesQuery
+      });
+
+      return { mailBoxes };
+    } catch (e) {
+      window.alert("Something went wrong while getting data");
+      console.error(e);
+    }
+  },
   async created() {
     try {
       if (!this.$store.state.currentUser.id) {
@@ -288,23 +302,22 @@ export default {
         });
 
         this.$store.commit("currentUser/set", me);
+        const currentUser = this.$store.state.currentUser;
+
+        if (currentUser.group === "RECIPIENT") {
+          this.$router.push(`/app/mailbox/${currentUser.id}`);
+        }
       }
     } catch (e) {
       window.alert("Something went wrong while getting data");
       console.error(e);
     }
+  },
+  mounted() {
+    const currentUser = this.$store.state.currentUser;
 
-    try {
-      const {
-        data: { mailBoxes }
-      } = await this.$apollo.query({
-        query: MailBoxesQuery
-      });
-
-      this.mailBoxes = mailBoxes;
-    } catch (e) {
-      window.alert("Something went wrong while getting data");
-      console.error(e);
+    if (currentUser.group === "RECIPIENT") {
+      this.$router.push(`/app/mailbox/${currentUser.id}`);
     }
   },
   methods: {
