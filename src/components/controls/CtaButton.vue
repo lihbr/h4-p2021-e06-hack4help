@@ -1,5 +1,6 @@
 <template>
   <smart-link
+    type="false"
     class="ctaButton block bg-cyan hover:bg-cyan-800 transition-bg-opacity transition-half rounded text-center select-none"
     :class="{
       disabled,
@@ -15,6 +16,7 @@
     <button
       class="px-5 text-strong-cta uppercase w-inherit outline-none"
       :class="{ small }"
+      :type="type"
     >
       <slot />
     </button>
@@ -45,6 +47,10 @@ export default {
       default: false
     },
     outline: {
+      type: String,
+      default: ""
+    },
+    type: {
       type: String,
       default: ""
     }
