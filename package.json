@@ -2,7 +2,7 @@
   "name": "h4-p2021-e06-hack4help",
   "version": "1.0.0",
   "description": "An application to help homeless get a mailbox",
-  "author": "lihbr, ameliegj & JulesGuesnon",
+  "author": ["lihbr", "ameliegj", "JulesGuesnon"],
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "dev": "nuxt",
